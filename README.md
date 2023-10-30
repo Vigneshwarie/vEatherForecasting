@@ -10,6 +10,8 @@ N/A
 
 ## Usage
 
+To access the webpage, use the below link to access https://vigneshwarie.github.io/vEatherForecasting/
+
 The application source code can be accessed here https://github.com/Vigneshwarie/vEatherForecasting
 
 The code can be downloaded from the above link. To use this webpage, click the HTML page, which will open in the browser. The view the code, open the webpage in an HTML editor. When opened in a browser, the HTML page is viewed as below.
