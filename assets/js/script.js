@@ -11,6 +11,8 @@ var longitude;
 var cityNameDisplay = document.getElementById("cityNameDisplay");
 var today = dayjs().format('YYYY-MM-DD');
 
+
+
 // Data is nested in multifolds. Tried few other ways. Im wasting time, so going with day wise. Formatting is not working in single line. 
 var requestDate = dayjs(today);
 var day1 = requestDate.add(1, "day");
@@ -89,10 +91,15 @@ function getWeatherDetails(pLatitude, pLongitude) {
 
 //Reference Degree display http://mc-computing.com/languages/Javascript/Degree_Symbol/Degree_Symbol.html
 
+// Tried few others ways to display data. Things were not working out.. Hence, achieved like this. Please tell me some hint on the other possible ways.
+// Also, as it is forecasting, I couldn't fix the time like 9am. So, it will display the last value of the loop.
+
 function displayCurrentDayDetails(data) { 
-     cityNameDisplay.innerHTML = cityName +" ("+dayjs.unix(data.list[0].dt).format('MM/DD/YYYY')+")";
-     console.log(data);
+     //console.log(data);
      if (data.cnt > 1) {
+          document.getElementById("displayDiv").style.display = "block";
+          cityNameDisplay.innerHTML = cityName + " (" + dayjs.unix(data.list[0].dt).format('MM/DD/YYYY') + ")";
+          document.getElementById("cityNameDisplay").value = " ";
           for (var i = 0; i < data.cnt; i++) {
                var vDate = data.list[i].dt_txt;
                vDate = vDate.split(" ");
@@ -106,36 +113,42 @@ function displayCurrentDayDetails(data) {
                     document.getElementById("currWind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("currHumidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                }
-
+               
                if (vDate[0] === day1) {
-                    document.getElementById("day1Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+                    document.getElementById("day1Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                    document.getElementById("day1Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day1Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
+                    document.getElementById("day1Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                }
                if (vDate[0] === day2) {
-                     document.getElementById("day2Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+                    document.getElementById("day2Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                     document.getElementById("day2Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day2Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
+                    document.getElementById("day2Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                }
                if (vDate[0] === day3) {
-                     document.getElementById("day3Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+                    document.getElementById("day3Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                     document.getElementById("day3Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day3Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
+                    document.getElementById("day3Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                }
                if (vDate[0] === day4) {
-                     document.getElementById("day4Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+                    document.getElementById("day4Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                     document.getElementById("day4Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day4Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
+                    document.getElementById("day4Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                }
                if (vDate[0] === day5) {
-                     document.getElementById("day5Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+                    document.getElementById("day5Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                     document.getElementById("day5Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day5Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
+                    document.getElementById("day5Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                }
-        
-               //console.log(vDate[1]);
           }
      }
-     console.log("Hello here 1");
-     console.log(data.cnt);
-     if (data.cnt > 1) {
-          console.log(data.list[0]);
-          console.log(dayjs.unix(data.list[0].dt).format('MM/DD/YYYY'));
-          
-          //console.log("Hello here 2");
-      
+     else {
+          window.alert("No data for the selected city. Please choose a different city");
      }
-
 }
 
 
