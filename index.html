@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <meta name="Description" content="Enter your description here" />
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+     <link rel="stylesheet" href="./assets/css/style.css" />
+
+     <title>vEather Forecasting</title>
+</head>
+
+<body>
+     <!-- Page margins are created using the container and container-fluid classes -->
+     <header class="container-fluid bg-blue text-light mb-5 p-3">
+          <div class="d-flex align-items-center">
+               <h1>vEather Forecasting</h1>
+          </div>
+     </header>
+
+     <!-- Two column layout -->
+     <section class="container my-5">
+          <!-- Use row class to create row in the container -->
+          <div class="row">
+               <!-- Use col-* classes for different column sizes on different screens -->
+               <div class="col-12 col-md-4 col-lg-3">
+                    <h3>Search for a City</h3>
+                    <form>
+                         <div class="mb-3">
+                              <input class="form-control" list="datalistOptions" name="cityDataList" id="cityDataList" placeholder="Type to search...">
+                              <datalist id="datalistOptions">       
+                                   <option value="Atlanta">
+                                   <option value="Denver">
+                                   <option value="Seattle">
+                                   <option value="San Francisco">
+                                   <option value="Orlando">
+                                   <option value="New York">
+                                   <option value="Chicago">
+                                   <option value="Austin">     
+                              </datalist>
+                         </div>
+                         
+                         <button type="button" class="btn btn-primary" id="searchButton">Search</button>
+                    </form>
+               </div>
+
+               <div class="col-12 col-md-8 col-lg-9">
+                    <h3>Main Content</h3>
+                    <h5>9/12 columns on large screens, 8/12 columns on medium screens, 12/12 (full-width) on small
+                         screens</h5>
+                    <p>
+                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores blanditiis temporibus facilis
+                         cumque
+                         corporis illum, in dolorum? Ad, sed nulla adipisci vel repellendus facere hic rerum veritatis
+                         quia
+                         reprehenderit velit?
+                    </p>
+               </div>
+          </div>
+     </section>
+     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+     <script src="./assets/js/script.js"></script>
+
+     
+
+</body>
+
+</html>
