@@ -11,3 +11,7 @@ h1{
 .btn-primary{
      background-color: #014f86;
 }
+
+.row{
+     padding-bottom: 10px;
+}
