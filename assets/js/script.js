@@ -9,6 +9,26 @@ var latitude;
 var longitude;
 
 var cityNameDisplay = document.getElementById("cityNameDisplay");
+var today = dayjs().format('YYYY-MM-DD');
+
+// Data is nested in multifolds. Tried few other ways. Im wasting time, so going with day wise. Formatting is not working in single line. 
+var requestDate = dayjs(today);
+var day1 = requestDate.add(1, "day");
+var day2 = requestDate.add(2, "day");
+var day3 = requestDate.add(3, "day");
+var day4 = requestDate.add(4, "day");
+var day5 = requestDate.add(5, "day");
+
+day1 = day1.format('YYYY-MM-DD');
+day2 = day2.format('YYYY-MM-DD');
+day3 = day3.format('YYYY-MM-DD');
+day4 = day4.format('YYYY-MM-DD');
+day5 = day5.format('YYYY-MM-DD');
+
+//console.log(today + "==" + day1);
+
+
+
 
 
 $("#searchButton").on('click', function () {  
@@ -62,22 +82,56 @@ function getWeatherDetails(pLatitude, pLongitude) {
      method: 'GET',
      }).then(function (response) {
           console.log('AJAX Response \n-------------');
-          //console.log(response);
+          console.log(response);
           displayCurrentDayDetails(response);
      });
 }
 
+//Reference Degree display http://mc-computing.com/languages/Javascript/Degree_Symbol/Degree_Symbol.html
+
 function displayCurrentDayDetails(data) { 
-     cityNameDisplay.innerHTML = cityName;
+     cityNameDisplay.innerHTML = cityName +" ("+dayjs.unix(data.list[0].dt).format('MM/DD/YYYY')+")";
      console.log(data);
+     if (data.cnt > 1) {
+          for (var i = 0; i < data.cnt; i++) {
+               var vDate = data.list[i].dt_txt;
+               vDate = vDate.split(" ");
+               console.log(vDate[0]);
+               console.log(today);
+              
+
+               // Code for current day display
+               if (vDate[0] === today) {
+                    document.getElementById("currTemp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("currWind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
+                    document.getElementById("currHumidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
+               }
+
+               if (vDate[0] === day1) {
+                    document.getElementById("day1Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+               }
+               if (vDate[0] === day2) {
+                     document.getElementById("day2Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+               }
+               if (vDate[0] === day3) {
+                     document.getElementById("day3Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+               }
+               if (vDate[0] === day4) {
+                     document.getElementById("day4Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+               }
+               if (vDate[0] === day5) {
+                     document.getElementById("day5Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY')
+               }
+        
+               //console.log(vDate[1]);
+          }
+     }
      console.log("Hello here 1");
      console.log(data.cnt);
      if (data.cnt > 1) {
           console.log(data.list[0]);
-          console.log(dayjs.unix(data.list[0].dt));
-          document.getElementById("currTemp").innerHTML = "Temp: " + data.list[0].main.temp;
-          document.getElementById("currWind").innerHTML = "Wind Speed: "+ data.list[0].wind.speed;
-          document.getElementById("currHumidity").innerHTML = "Humidity: "+data.list[0].main.humidity;
+          console.log(dayjs.unix(data.list[0].dt).format('MM/DD/YYYY'));
+          
           //console.log("Hello here 2");
       
      }
