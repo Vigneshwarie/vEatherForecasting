@@ -1,6 +1,6 @@
 var requestLocationLatLongUrl = 'https://api.api-ninjas.com/v1/geocoding';
 
-var weatherUrl = "https://api.openweathermap.org/data/2.5/forecast";
+var weatherUrl = "http://api.openweathermap.org/data/2.5/forecast";
 
 var vLatitudeLongitude_API_KEY = "VvjL07GIM+tjq1AaTRH46Q==SCecnrlco9Gox1FX";
 var vWeather_API_KEY = "c36758574d57eccdb423116f200c9c41";
@@ -48,7 +48,7 @@ $("#searchButton").on('click', function () {
 
 
 function getWeatherDetails(pLatitude, pLongitude) {
-     weatherUrl = weatherUrl + "?lat=" + pLatitude + "&lon=" + pLongitude + "&appid={" + vWeather_API_KEY + "}";
+     weatherUrl = weatherUrl + "?lat=" + pLatitude + "&lon=" + pLongitude + "&appid=" + vWeather_API_KEY + "";
 
      console.log(weatherUrl);
 
