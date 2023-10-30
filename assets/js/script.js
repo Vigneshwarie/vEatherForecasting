@@ -93,6 +93,7 @@ function getWeatherDetails(pLatitude, pLongitude) {
 
 // Tried few others ways to display data. Things were not working out.. Hence, achieved like this. Please tell me some hint on the other possible ways.
 // Also, as it is forecasting, I couldn't fix the time like 9am. So, it will display the last value of the loop.
+// The given API doesn't give current day data after some hrs passed in the day.
 
 function displayCurrentDayDetails(data) { 
      //console.log(data);
