@@ -18,7 +18,7 @@ The code can be downloaded from the above link. To use this webpage, click the H
 
 ![Alt text](assets/images/HomePage.png)
 
-![Alt text](assets/images/WeatherDisplay.png)
+![Alt text](assets/images/WeatherDisplay2.png)
 
 ## API Details
 
