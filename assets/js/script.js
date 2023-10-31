@@ -1,6 +1,6 @@
 var requestLocationLatLongUrl = 'https://api.api-ninjas.com/v1/geocoding';
 
-var weatherUrl = "http://api.openweathermap.org/data/2.5/forecast";
+var weatherUrl = "https://api.openweathermap.org/data/2.5/forecast";
 
 var vLatitudeLongitude_API_KEY = "VvjL07GIM+tjq1AaTRH46Q==SCecnrlco9Gox1FX";
 var vWeather_API_KEY = "c36758574d57eccdb423116f200c9c41";
@@ -14,6 +14,7 @@ var today = dayjs().format('YYYY-MM-DD');
 
 
 // Data is nested in multifolds. Tried few other ways. Im wasting time, so going with day wise. Formatting is not working in single line. 
+// Referred from https://day.js.org/docs/en/manipulate/add
 var requestDate = dayjs(today);
 var day1 = requestDate.add(1, "day");
 var day2 = requestDate.add(2, "day");
@@ -28,10 +29,6 @@ day4 = day4.format('YYYY-MM-DD');
 day5 = day5.format('YYYY-MM-DD');
 
 //console.log(today + "==" + day1);
-
-
-
-
 
 $("#searchButton").on('click', function () {  
      cityName = $("input[name=cityDataList]").val();
