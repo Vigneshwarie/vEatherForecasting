@@ -25,25 +25,26 @@
           <!-- Use row class to create row in the container -->
           <div class="row">
                <!-- Use col-* classes for different column sizes on different screens -->
-               <div class="col-12 col-md-4 col-lg-3">
+               <div class="col-12 col-md-4 col-lg-3" id="searchDiv">
                     <h4>Search for a City</h4>
-                    <form>
-                         <div class="mb-3">
-                              <input class="form-control" list="datalistOptions" name="cityDataList" id="cityDataList" placeholder="Type to search...">
-                              <datalist id="datalistOptions">       
-                                   <option value="Atlanta">
-                                   <option value="Denver">
-                                   <option value="Seattle">
-                                   <option value="San Francisco">
-                                   <option value="Orlando">
-                                   <option value="New York">
-                                   <option value="Chicago">
-                                   <option value="Austin">     
-                              </datalist>
-                         </div>
-                         
-                         <button type="button" class="btn btn-primary" id="searchButton">Search</button>
-                    </form>
+                    <div class="mb-3">
+                         <input class="form-control" list="datalistOptions" name="cityDataList" id="cityDataList" placeholder="Type to search...">
+                         <datalist id="datalistOptions">       
+                              <option value="Atlanta">
+                              <option value="Denver">
+                              <option value="Seattle">
+                              <option value="San Francisco">
+                              <option value="Orlando">
+                              <option value="New York">
+                              <option value="Chicago">
+                              <option value="Austin">     
+                         </datalist>
+                    </div>  
+                    <button type="button" class="btn btn-primary" id="searchButton">Search</button>
+               </div>
+
+               <div class="col-12 col-md-4 col-lg-3" id="backDiv">
+                    <button type="button" class="btn btn-primary" id="backButton">Check for a Different City</button>
                </div>
 
                <div class="col-12 col-md-8 col-lg-9" id="displayDiv">

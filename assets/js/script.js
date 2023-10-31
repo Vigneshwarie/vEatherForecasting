@@ -34,11 +34,11 @@ $("#searchButton").on('click', function () {
      cityName = $("input[name=cityDataList]").val();
      if (cityName !== "") {
           console.log(cityName);
-          getLatitudeLongitude(cityName);
+          getLatitudeLongitude(cityName);    
      }
      else {
           window.alert("Please select the city!");
-     }
+     }   
 });
 
 //Using the below API for getting the latitude and longitude of the entered city. They have given reference code on how to use their APIs. Since, one city has multiple values, I chose the first value as default. The latitude and longitude is passed to another function which calls the weather API.
@@ -97,7 +97,6 @@ function displayCurrentDayDetails(data) {
      if (data.cnt > 1) {
           document.getElementById("displayDiv").style.display = "block";
           cityNameDisplay.innerHTML = cityName + " (" + dayjs.unix(data.list[0].dt).format('MM/DD/YYYY') + ")";
-          document.getElementById("cityNameDisplay").value = " ";
           for (var i = 0; i < data.cnt; i++) {
                var vDate = data.list[i].dt_txt;
                vDate = vDate.split(" ");
@@ -143,10 +142,24 @@ function displayCurrentDayDetails(data) {
                     document.getElementById("day5Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                }
           }
+          
      }
      else {
           window.alert("No data for the selected city. Please choose a different city");
      }
+     hideSearchContent();
 }
+
+// Added these blocks to solve incorrect data append due to repeated API call. 
+function hideSearchContent() {
+     document.getElementById("searchDiv").style.display = "none";
+     document.getElementById("backDiv").style.display = "block";
+}
+
+$("#backButton").on('click', function () {  
+     location.reload();
+});
+
+
 
 
