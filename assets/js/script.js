@@ -1,6 +1,5 @@
-var requestLocationLatLongUrl = 'https://api.api-ninjas.com/v1/geocoding';
 
-var weatherUrl = "https://api.openweathermap.org/data/2.5/forecast";
+
 
 var vLatitudeLongitude_API_KEY = "VvjL07GIM+tjq1AaTRH46Q==SCecnrlco9Gox1FX";
 var vWeather_API_KEY = "c36758574d57eccdb423116f200c9c41";
@@ -9,6 +8,8 @@ var latitude;
 var longitude;
 
 var cityNameDisplay = document.getElementById("cityNameDisplay");
+var searchHistoryDisplayEl = document.querySelector("#citySearchHistory");
+
 var today = dayjs().format('YYYY-MM-DD');
 
 
@@ -28,6 +29,17 @@ day3 = day3.format('YYYY-MM-DD');
 day4 = day4.format('YYYY-MM-DD');
 day5 = day5.format('YYYY-MM-DD');
 
+var weatherCities = [];
+
+var cityWeatherObject;
+
+var currDayWeatherObject = [];
+var day1WeatherObject = [];
+var day2WeatherObject = [];
+var day3WeatherObject = [];
+var day4WeatherObject = [];
+var day5WeatherObject = [];
+
 //console.log(today + "==" + day1);
 
 $("#searchButton").on('click', function () {  
@@ -44,9 +56,16 @@ $("#searchButton").on('click', function () {
 //Using the below API for getting the latitude and longitude of the entered city. They have given reference code on how to use their APIs. Since, one city has multiple values, I chose the first value as default. The latitude and longitude is passed to another function which calls the weather API.
 //https://api-ninjas.com/api/geocoding
 function getLatitudeLongitude(city) {
+     var requestLocationLatLongUrl = 'https://api.api-ninjas.com/v1/geocoding';
+     console.log("Calling this everytime");
      requestLocationLatLongUrl = requestLocationLatLongUrl + "?city=" + city + "";
 
-     $.ajax({
+      weatherCities.push(city);
+
+     console.log(requestLocationLatLongUrl);
+     document.getElementById("cityDataList").value = "";
+
+     setTimeout(()=>{$.ajax({
           method: 'GET',
           url: requestLocationLatLongUrl,
           headers: { 'X-Api-Key': vLatitudeLongitude_API_KEY},
@@ -66,15 +85,18 @@ function getLatitudeLongitude(city) {
           error: function ajaxError(jqXHR) {
                console.error('Error: ', jqXHR.responseText);
           }
-     });  
+     });  }, 1000);
+
+     
 }
 
 
 // This function uses the latitude and longitude data and brings the data from Weather API
 function getWeatherDetails(pLatitude, pLongitude) {
+     var weatherUrl = "https://api.openweathermap.org/data/2.5/forecast";
      weatherUrl = weatherUrl + "?lat=" + pLatitude + "&lon=" + pLongitude + "&appid=" + vWeather_API_KEY + "&units=imperial";
      
-     console.log(weatherUrl);
+     console.log("The weather URL===",weatherUrl);
 
      $.ajax({
      url: weatherUrl,
@@ -92,6 +114,7 @@ function getWeatherDetails(pLatitude, pLongitude) {
 // Also, as it is forecasting, I couldn't fix the time like 9am. So, it will display the last value of the loop.
 // The given API doesn't give current day data after some hrs passed in the day.
 
+
 function displayCurrentDayDetails(data) { 
      //console.log(data);
      if (data.cnt > 1) {
@@ -100,8 +123,10 @@ function displayCurrentDayDetails(data) {
           for (var i = 0; i < data.cnt; i++) {
                var vDate = data.list[i].dt_txt;
                vDate = vDate.split(" ");
-               console.log(vDate[0]);
-               console.log(today);
+          //     console.log(vDate[0]);
+          //     console.log(today);
+
+              
               
 
                // Code for current day display
@@ -109,6 +134,7 @@ function displayCurrentDayDetails(data) {
                     document.getElementById("currTemp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("currWind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("currHumidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
+                    currDayWeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
                
                if (vDate[0] === day1) {
@@ -116,33 +142,47 @@ function displayCurrentDayDetails(data) {
                     document.getElementById("day1Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day1Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day1Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
+                    day1WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
                if (vDate[0] === day2) {
                     document.getElementById("day2Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
                      document.getElementById("day2Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day2Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day2Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
+                    day2WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
                if (vDate[0] === day3) {
                     document.getElementById("day3Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
                      document.getElementById("day3Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day3Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day3Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
+                    day3WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
                if (vDate[0] === day4) {
                     document.getElementById("day4Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
                      document.getElementById("day4Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day4Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day4Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
+                    day4WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
                if (vDate[0] === day5) {
                     document.getElementById("day5Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
                      document.getElementById("day5Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day5Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day5Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
+                    day5WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
           }
-          
+          cityWeatherObject = {
+               "currDate": { "currDate": currDayWeatherObject },
+               "day1": { "day1": day1WeatherObject },
+               "day2": { "day2": day2WeatherObject },
+               "day3": { "day3": day3WeatherObject },
+               "day4": { "day4": day4WeatherObject },
+               "day5": { "day5": day5WeatherObject }
+          };
+          localStorage.setItem("" + cityName + "", JSON.stringify(cityWeatherObject)); 
+          showSearchHistory();
      }
      else {
           window.alert("No data for the selected city. Please choose a different city");
@@ -150,10 +190,51 @@ function displayCurrentDayDetails(data) {
      hideSearchContent();
 }
 
+function showSearchHistory() {
+     searchHistoryDisplayEl.innerHTML = "";
+     searchHistoryDisplayEl.style.display = "block";
+
+     for (var i = 0; i < weatherCities.length; i++) { 
+          console.log("length==" + weatherCities.length);
+          console.log(weatherCities[i]);
+          
+          var cityButtonEl = document.createElement("button");
+          
+         
+          var typeAttr = document.createAttribute("type");
+          typeAttr.value = "button";
+          cityButtonEl.setAttributeNode(typeAttr);
+
+          var idAttr = document.createAttribute("id");
+          idAttr.value = "displayCityDetailBtn";
+          cityButtonEl.setAttributeNode(idAttr);
+     
+          var classAttr = document.createAttribute("class");
+          classAttr.value = "btn btn-primary";
+          cityButtonEl.setAttributeNode(classAttr);
+     
+          cityButtonEl.innerHTML = ""+weatherCities[i]+""
+          console.log(cityButtonEl);
+          var brEl1 = document.createElement("br");
+          var brEl2 = document.createElement("br");
+          searchHistoryDisplayEl.appendChild(cityButtonEl);
+          searchHistoryDisplayEl.appendChild(brEl1);
+          searchHistoryDisplayEl.appendChild(brEl2);
+          var displayCityDetailBtnFun = searchHistoryDisplayEl.querySelector("#displayCityDetailBtn");
+          displayCityDetailBtnFun.addEventListener("click", displayCityDetail(""+weatherCities[i]+""));    
+     
+     }
+     
+}
+
+function displayCityDetail(city) {
+     console.log("the city name is ==", city);
+}
+
 // Added these blocks to solve incorrect data append due to repeated API call. 
 function hideSearchContent() {
-     document.getElementById("searchDiv").style.display = "none";
-     document.getElementById("backDiv").style.display = "block";
+    // document.getElementById("searchDiv").style.display = "none";
+    // document.getElementById("backDiv").style.display = "block";
 }
 
 $("#backButton").on('click', function () {  
