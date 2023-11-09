@@ -10,10 +10,13 @@ h1{
 
 .btn-primary{
      background-color: #2a6f97;
+     width: 200px;
 }
 
 .row{
      padding-bottom: 10px;
+     margin-right: calc(-.8 * var(--bs-gutter-x));
+     margin-left: calc(-.8 * var(--bs-gutter-x));
 }
 
 .card{
@@ -26,10 +29,6 @@ h1{
      padding-left: var(--bs-gutter-x, .25rem);
 }
 
-.row{
-     margin-right: calc(-.8 * var(--bs-gutter-x));
-     margin-left: calc(-.8 * var(--bs-gutter-x));
-}
 
 .card-body{
      flex: 1 1 auto;
@@ -40,11 +39,4 @@ h1{
      display:none;
 }
 
-#backDiv{
-     display: none;
-}
-
-#citySearchHistory {
-     /*display: none; */
-}
 

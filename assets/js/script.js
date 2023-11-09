@@ -1,6 +1,5 @@
 
 
-
 var vLatitudeLongitude_API_KEY = "VvjL07GIM+tjq1AaTRH46Q==SCecnrlco9Gox1FX";
 var vWeather_API_KEY = "c36758574d57eccdb423116f200c9c41";
 var cityName;
@@ -11,6 +10,8 @@ var cityNameDisplay = document.getElementById("cityNameDisplay");
 var searchHistoryDisplayEl = document.querySelector("#citySearchHistory");
 
 var today = dayjs().format('YYYY-MM-DD');
+
+var currDate =  dayjs().format('MM/DD/YYYY');
 
 
 
@@ -85,9 +86,7 @@ function getLatitudeLongitude(city) {
           error: function ajaxError(jqXHR) {
                console.error('Error: ', jqXHR.responseText);
           }
-     });  }, 1000);
-
-     
+     });  }, 100);
 }
 
 
@@ -95,8 +94,6 @@ function getLatitudeLongitude(city) {
 function getWeatherDetails(pLatitude, pLongitude) {
      var weatherUrl = "https://api.openweathermap.org/data/2.5/forecast";
      weatherUrl = weatherUrl + "?lat=" + pLatitude + "&lon=" + pLongitude + "&appid=" + vWeather_API_KEY + "&units=imperial";
-     
-     console.log("The weather URL===",weatherUrl);
 
      $.ajax({
      url: weatherUrl,
@@ -123,11 +120,6 @@ function displayCurrentDayDetails(data) {
           for (var i = 0; i < data.cnt; i++) {
                var vDate = data.list[i].dt_txt;
                vDate = vDate.split(" ");
-          //     console.log(vDate[0]);
-          //     console.log(today);
-
-              
-              
 
                // Code for current day display
                if (vDate[0] === today) {
@@ -146,33 +138,34 @@ function displayCurrentDayDetails(data) {
                }
                if (vDate[0] === day2) {
                     document.getElementById("day2Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
-                     document.getElementById("day2Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day2Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day2Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day2Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                     day2WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
                if (vDate[0] === day3) {
                     document.getElementById("day3Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
-                     document.getElementById("day3Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day3Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day3Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day3Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                     day3WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
                if (vDate[0] === day4) {
                     document.getElementById("day4Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
-                     document.getElementById("day4Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day4Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day4Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day4Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                     day4WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
                if (vDate[0] === day5) {
                     document.getElementById("day5Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
-                     document.getElementById("day5Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
+                    document.getElementById("day5Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day5Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day5Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
                     day5WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
                }
           }
+          // Based central grader comments, included the functionality to store the details in local storage for retrieval.
           cityWeatherObject = {
                "currDate": { "currDate": currDayWeatherObject },
                "day1": { "day1": day1WeatherObject },
@@ -187,59 +180,74 @@ function displayCurrentDayDetails(data) {
      else {
           window.alert("No data for the selected city. Please choose a different city");
      }
-     hideSearchContent();
 }
 
+// This function will create a button everytime the city is searched.
 function showSearchHistory() {
      searchHistoryDisplayEl.innerHTML = "";
      searchHistoryDisplayEl.style.display = "block";
 
-     for (var i = 0; i < weatherCities.length; i++) { 
-          console.log("length==" + weatherCities.length);
-          console.log(weatherCities[i]);
-          
-          var cityButtonEl = document.createElement("button");
-          
-         
-          var typeAttr = document.createAttribute("type");
-          typeAttr.value = "button";
-          cityButtonEl.setAttributeNode(typeAttr);
+     weatherCities.forEach((city) => {
+          var cityDivEl = document.createElement("div");
 
-          var idAttr = document.createAttribute("id");
-          idAttr.value = "displayCityDetailBtn";
-          cityButtonEl.setAttributeNode(idAttr);
-     
-          var classAttr = document.createAttribute("class");
-          classAttr.value = "btn btn-primary";
-          cityButtonEl.setAttributeNode(classAttr);
-     
-          cityButtonEl.innerHTML = ""+weatherCities[i]+""
-          console.log(cityButtonEl);
+          cityDivEl.classList.add("cityList");
+          var idAttr = document.createAttribute("cityId");
+          idAttr.value = city;
+          cityDivEl.setAttributeNode(idAttr);
+          cityDivEl.innerHTML = `<button type="button" class="btn btn-primary" id="displayCityDetail">${city}</button> `;
+          var displayCityDetailBtnFun = cityDivEl.querySelector("#displayCityDetail");
+          displayCityDetailBtnFun.addEventListener("click", displayCityDetail);
+
+          searchHistoryDisplayEl.appendChild(cityDivEl);
           var brEl1 = document.createElement("br");
-          var brEl2 = document.createElement("br");
-          searchHistoryDisplayEl.appendChild(cityButtonEl);
           searchHistoryDisplayEl.appendChild(brEl1);
-          searchHistoryDisplayEl.appendChild(brEl2);
-          var displayCityDetailBtnFun = searchHistoryDisplayEl.querySelector("#displayCityDetailBtn");
-          displayCityDetailBtnFun.addEventListener("click", displayCityDetail(""+weatherCities[i]+""));    
-     
+     });
+}
+
+// This function takes the target element city and fetch the data from the localstorage and display.
+function displayCityDetail(event) {
+     var targetEl = event.currentTarget.parentElement;
+     var city = targetEl.getAttribute("cityId");
+     var cityObject = localStorage.getItem(city);
+     var cityData = JSON.parse(cityObject);
+ 
+     cityNameDisplay.innerHTML = city + " (" + currDate + ")";
+
+     if (cityData.currDate.currDate.length > 0) {
+          //Display back current date
+          document.getElementById("currTemp").innerHTML = "Temp: " + cityData.currDate.currDate[0].temp + "&degF";
+          document.getElementById("currWind").innerHTML = "Wind Speed: " + cityData.currDate.currDate[0].wind + " MPH";
+          document.getElementById("currHumidity").innerHTML = "Humidity: " + cityData.currDate.currDate[0].humidity + " %";   
      }
-     
+
+     //Display back Day 1
+     document.getElementById("day1Temp").innerHTML = "Temp: " + cityData.day1.day1[0].temp + "&degF";
+     document.getElementById("day1Wind").innerHTML = "Wind Speed: " + cityData.day1.day1[0].wind + " MPH";
+     document.getElementById("day1Humidity").innerHTML = "Humidity: " + cityData.day1.day1[0].humidity + " %";   
+
+     //Display back Day 2
+     document.getElementById("day2Temp").innerHTML = "Temp: " + cityData.day2.day2[0].temp + "&degF";
+     document.getElementById("day2Wind").innerHTML = "Wind Speed: " + cityData.day2.day2[0].wind + " MPH";
+     document.getElementById("day2Humidity").innerHTML = "Humidity: " + cityData.day2.day2[0].humidity + " %";   
+
+     //Display back Day 3
+     document.getElementById("day3Temp").innerHTML = "Temp: " + cityData.day3.day3[0].temp + "&degF";
+     document.getElementById("day3Wind").innerHTML = "Wind Speed: " + cityData.day3.day3[0].wind + " MPH";
+     document.getElementById("day3Humidity").innerHTML = "Humidity: " + cityData.day3.day3[0].humidity + " %";   
+
+     //Display back Day 4
+     document.getElementById("day4Temp").innerHTML = "Temp: " + cityData.day4.day4[0].temp + "&degF";
+     document.getElementById("day4Wind").innerHTML = "Wind Speed: " + cityData.day4.day4[0].wind + " MPH";
+     document.getElementById("day4Humidity").innerHTML = "Humidity: " + cityData.day4.day4[0].humidity + " %";   
+
+     //Display back Day 5
+     document.getElementById("day5Temp").innerHTML = "Temp: " + cityData.day5.day5[0].temp + "&degF";
+     document.getElementById("day5Wind").innerHTML = "Wind Speed: " + cityData.day5.day5[0].wind + " MPH";
+     document.getElementById("day5Humidity").innerHTML = "Humidity: " + cityData.day5.day5[0].humidity + " %";   
 }
 
-function displayCityDetail(city) {
-     console.log("the city name is ==", city);
-}
 
-// Added these blocks to solve incorrect data append due to repeated API call. 
-function hideSearchContent() {
-    // document.getElementById("searchDiv").style.display = "none";
-    // document.getElementById("backDiv").style.display = "block";
-}
 
-$("#backButton").on('click', function () {  
-     location.reload();
-});
 
 
 
