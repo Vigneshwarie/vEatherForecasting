@@ -2,7 +2,7 @@
 
 ## Description
 
-This webpage was created to demonstrate the knowledge gained in the Server-Side APIs week in coding boot camp and as a part of the class assignment submission. The vEather (Weather, instead of W, I used my initial) was developed using HTML, CSS, JS technology, and third-party APIs like jQuery, Bootstrap, and Dayjs. The application displays the weather forecast for five(5) days for selected cities from the list. The application uses two different APIs to fetch the data. The geocoding API will give us the latitude and longitude of the selected location. These values are passed to the weather API to retrieve the five-day forecasting.
+This webpage was created to demonstrate the knowledge gained in the Server-Side APIs week in coding boot camp and as a part of the class assignment submission. The vEather (Weather, instead of W, I used my initial) was developed using HTML, CSS, JS technology, and third-party APIs like jQuery, Bootstrap, and Dayjs. The application displays the weather forecast for five(5) days for selected cities from the list. The application uses two different APIs to fetch the data. The geocoding API will give us the latitude and longitude of the selected location. These values are passed to the weather API to retrieve the five-day forecasting. The application also facilitates the user by storing the weather details of the recently searched items, enabling them to retrieve data quickly.
 
 ## Installation
 
@@ -16,19 +16,28 @@ The application source code can be accessed here https://github.com/Vigneshwarie
 
 The code can be downloaded from the above link. To use this webpage, click the HTML page, which will open in the browser. The view the code, open the webpage in an HTML editor. When opened in a browser, the HTML page is viewed as below.
 
-![Alt text](assets/images/HomePage.png)
+![Alt text](assets/images/LandingPage.png)
 
-![Alt text](assets/images/WeatherDisplay2.png)
+### On First Search
+![Alt text](assets/images/FirstSearch.png)
+
+### Another Search
+![Alt text](assets/images/SecondSearch.png)
+
+### Search from History
+![Alt text](assets/images/UseHistory.png)
 
 ## API Details
 
 Geocoding API - https://api.api-ninjas.com/v1/geocoding
+
 Open Weather API - http://api.openweathermap.org/data/2.5/forecast
 API Keys can be retrieved from the script file located in the repo
 
 ## Credits
 
 Geocoding API - https://api.api-ninjas.com/v1/geocoding
+
 Open Weather API - http://api.openweathermap.org/data/2.5/forecast
 
 ## License
