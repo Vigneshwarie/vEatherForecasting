@@ -41,6 +41,9 @@ var day3WeatherObject = [];
 var day4WeatherObject = [];
 var day5WeatherObject = [];
 
+var iconURL = "https://openweathermap.org/img/wn/";
+var newURL;
+
 //console.log(today + "==" + day1);
 
 $("#searchButton").on('click', function () {  
@@ -116,53 +119,64 @@ function displayCurrentDayDetails(data) {
      //console.log(data);
      if (data.cnt > 1) {
           document.getElementById("displayDiv").style.display = "block";
-          cityNameDisplay.innerHTML = cityName + " (" + dayjs.unix(data.list[0].dt).format('MM/DD/YYYY') + ")";
+          
           for (var i = 0; i < data.cnt; i++) {
                var vDate = data.list[i].dt_txt;
                vDate = vDate.split(" ");
-
-               // Code for current day display
+               
+               // Code for current day display. After certain time, we may not receive the data and it works the next day.
                if (vDate[0] === today) {
+                    newURL = iconURL+ data.list[i].weather[0].icon + ".png";
+                    cityNameDisplay.innerHTML = cityName + " (" + dayjs.unix(data.list[0].dt).format('MM/DD/YYYY') + ") " + `<img src=${newURL} alt="">`;
                     document.getElementById("currTemp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("currWind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("currHumidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
-                    currDayWeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
-               }
-               
+                    currDayWeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "", "icon": "" + data.list[i].weather[0].icon + "" }]
+               }             
                if (vDate[0] === day1) {
+                    newURL = iconURL+ data.list[i].weather[0].icon + ".png";
                     document.getElementById("day1Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                    document.getElementById("day1Icon").innerHTML = `<img src=${newURL} alt="">`;
                     document.getElementById("day1Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day1Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day1Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
-                    day1WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
+                    day1WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "", "icon": "" + data.list[i].weather[0].icon + "" }]
                }
                if (vDate[0] === day2) {
+                    newURL = iconURL+ data.list[i].weather[0].icon + ".png";
                     document.getElementById("day2Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                    document.getElementById("day2Icon").innerHTML = `<img src=${newURL} alt="">`;
                     document.getElementById("day2Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day2Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day2Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
-                    day2WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
+                    day2WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "", "icon": "" + data.list[i].weather[0].icon + "" }]
                }
                if (vDate[0] === day3) {
+                    newURL = iconURL+ data.list[i].weather[0].icon + ".png";
                     document.getElementById("day3Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                    document.getElementById("day3Icon").innerHTML = `<img src=${newURL}  alt="">`;
                     document.getElementById("day3Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day3Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day3Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
-                    day3WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
+                    day3WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "", "icon": "" + data.list[i].weather[0].icon + "" }]
                }
                if (vDate[0] === day4) {
+                    newURL = iconURL+ data.list[i].weather[0].icon + ".png";
                     document.getElementById("day4Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                    document.getElementById("day4Icon").innerHTML = `<img src=${newURL} alt="">`;
                     document.getElementById("day4Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day4Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day4Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
-                    day4WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
+                    day4WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "", "icon": "" + data.list[i].weather[0].icon + "" }]
                }
                if (vDate[0] === day5) {
+                    newURL = iconURL+ data.list[i].weather[0].icon + ".png";
                     document.getElementById("day5Header").innerHTML = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
+                    document.getElementById("day5Icon").innerHTML = `<img src=${newURL} alt="">`;
                     document.getElementById("day5Temp").innerHTML = "Temp: " + data.list[i].main.temp + "&degF";
                     document.getElementById("day5Wind").innerHTML = "Wind Speed: " + data.list[i].wind.speed + " MPH";
                     document.getElementById("day5Humidity").innerHTML = "Humidity: " + data.list[i].main.humidity + " %";   
-                    day5WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "" }]
+                    day5WeatherObject = [ { "temp": "" + data.list[i].main.temp + "", "wind": "" + data.list[i].wind.speed + "", "humidity": "" + data.list[i].main.humidity + "", "icon": "" + data.list[i].weather[0].icon + "" }]
                }
           }
           // Based central grader comments, included the functionality to store the details in local storage for retrieval.
@@ -211,36 +225,48 @@ function displayCityDetail(event) {
      var cityObject = localStorage.getItem(city);
      var cityData = JSON.parse(cityObject);
  
-     cityNameDisplay.innerHTML = city + " (" + currDate + ")";
+     
 
      if (cityData.currDate.currDate.length > 0) {
           //Display back current date
+          newURL = iconURL + cityData.currDate.currDate[0].icon + ".png";
+          cityNameDisplay.innerHTML = city + " (" + currDate + ")" + `<img src=${newURL} alt="">`;
           document.getElementById("currTemp").innerHTML = "Temp: " + cityData.currDate.currDate[0].temp + "&degF";
           document.getElementById("currWind").innerHTML = "Wind Speed: " + cityData.currDate.currDate[0].wind + " MPH";
           document.getElementById("currHumidity").innerHTML = "Humidity: " + cityData.currDate.currDate[0].humidity + " %";   
      }
 
      //Display back Day 1
+     newURL = iconURL+ cityData.day1.day1[0].icon + ".png";
+     document.getElementById("day1Icon").innerHTML = `<img src=${newURL} alt="">`;
      document.getElementById("day1Temp").innerHTML = "Temp: " + cityData.day1.day1[0].temp + "&degF";
      document.getElementById("day1Wind").innerHTML = "Wind Speed: " + cityData.day1.day1[0].wind + " MPH";
      document.getElementById("day1Humidity").innerHTML = "Humidity: " + cityData.day1.day1[0].humidity + " %";   
 
      //Display back Day 2
+     newURL = iconURL+ cityData.day2.day2[0].icon + ".png";
+     document.getElementById("day2Icon").innerHTML = `<img src=${newURL} alt="">`;
      document.getElementById("day2Temp").innerHTML = "Temp: " + cityData.day2.day2[0].temp + "&degF";
      document.getElementById("day2Wind").innerHTML = "Wind Speed: " + cityData.day2.day2[0].wind + " MPH";
      document.getElementById("day2Humidity").innerHTML = "Humidity: " + cityData.day2.day2[0].humidity + " %";   
 
      //Display back Day 3
+     newURL = iconURL+ cityData.day3.day3[0].icon + ".png";
+     document.getElementById("day3Icon").innerHTML = `<img src=${newURL} alt="">`;
      document.getElementById("day3Temp").innerHTML = "Temp: " + cityData.day3.day3[0].temp + "&degF";
      document.getElementById("day3Wind").innerHTML = "Wind Speed: " + cityData.day3.day3[0].wind + " MPH";
      document.getElementById("day3Humidity").innerHTML = "Humidity: " + cityData.day3.day3[0].humidity + " %";   
 
      //Display back Day 4
+     newURL = iconURL+ cityData.day4.day4[0].icon + ".png";
+     document.getElementById("day4Icon").innerHTML = `<img src=${newURL} alt="">`;
      document.getElementById("day4Temp").innerHTML = "Temp: " + cityData.day4.day4[0].temp + "&degF";
      document.getElementById("day4Wind").innerHTML = "Wind Speed: " + cityData.day4.day4[0].wind + " MPH";
      document.getElementById("day4Humidity").innerHTML = "Humidity: " + cityData.day4.day4[0].humidity + " %";   
 
      //Display back Day 5
+     newURL = iconURL+ cityData.day5.day5[0].icon + ".png";
+     document.getElementById("day5Icon").innerHTML = `<img src=${newURL} alt="">`;
      document.getElementById("day5Temp").innerHTML = "Temp: " + cityData.day5.day5[0].temp + "&degF";
      document.getElementById("day5Wind").innerHTML = "Wind Speed: " + cityData.day5.day5[0].wind + " MPH";
      document.getElementById("day5Humidity").innerHTML = "Humidity: " + cityData.day5.day5[0].humidity + " %";   
